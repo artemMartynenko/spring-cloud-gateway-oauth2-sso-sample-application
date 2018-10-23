@@ -1,0 +1,24 @@
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          delta:
+            client-id: gateway
+            client-secret: secret
+            authorization-grant-type: authorization_code
+            redirect-uri-template: '{baseUrl}/login/oauth2/code/{registrationId}'
+            clientName: gateway
+        provider:
+          delta:
+            authorization-uri: https://delta-develop.istar.org.ua:8090/auth/oauth/authorize
+            token-uri: https://delta-develop.istar.org.ua:8090/auth/oauth/token
+            jwk-set-uri: https://delta-develop.istar.org.ua:8090/auth/oauth/token_key
+            userNameAttribute: user_name
+  cloud:
+    gateway:
+      routes:
+      - id: monitor
+        predicates:
+        - Path=/monitor/**
+        uri: "http://delta-develop.istar.org.ua:8001"
