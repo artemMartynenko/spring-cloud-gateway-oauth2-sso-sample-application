@@ -22,3 +22,20 @@ spring:
         predicates:
         - Path=/monitor/**
         uri: "http://delta-develop.istar.org.ua:8001"
+        filters:
+        - PreOauth2SSOGatewayFilter
+
+      - id: updates-publisher
+        predicates:
+        - Path=/updates/**
+        uri: "http://localhost:8011"
+        filters:
+        - PreOauth2SSOGatewayFilter
+
+      - id: updates-publisher-ws
+        predicates:
+        - Path=/updates/events/info/**
+        uri: "http://localhost:8011"
+        filters:
+        - PreOauth2SSOGatewayFilter
+

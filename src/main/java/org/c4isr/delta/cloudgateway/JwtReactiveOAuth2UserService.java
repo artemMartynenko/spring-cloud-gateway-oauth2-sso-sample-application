@@ -26,7 +26,7 @@ public class JwtReactiveOAuth2UserService implements ReactiveOAuth2UserService<O
     public Mono<OAuth2User> loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
         return  jwtDecoder.decode(userRequest.getAccessToken()
                 .getTokenValue())
-                .map(jwt -> new DefaultOAuth2User(toGrantedAuthorities(jwt.getClaims()),jwt.getClaims(),"user_name"));
+                .map(jwt -> new JwtOAuth2User(toGrantedAuthorities(jwt.getClaims()),jwt.getClaims(),"user_name",jwt.getTokenValue()));
     }
 
 
