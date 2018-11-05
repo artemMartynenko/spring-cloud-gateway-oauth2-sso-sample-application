@@ -3,39 +3,45 @@ spring:
     oauth2:
       client:
         registration:
-          delta:
-            client-id: gateway
-            client-secret: secret
+          example:
+            client-id: yours-client-id
+            client-secret: yours-client-secret
             authorization-grant-type: authorization_code
             redirect-uri-template: '{baseUrl}/login/oauth2/code/{registrationId}'
             clientName: gateway
         provider:
-          delta:
-            authorization-uri: https://delta-develop.istar.org.ua:8090/auth/oauth/authorize
-            token-uri: https://delta-develop.istar.org.ua:8090/auth/oauth/token
-            jwk-set-uri: https://delta-develop.istar.org.ua:8090/auth/oauth/token_key
+          example:
+            authorization-uri: http://your-auth.service/oauth/authorize
+            token-uri: https://your-auth.service/oauth/token
+            jwt-key-uri: http://your-auth.service/oauth/token_key #optional you can also provide public key as property value in this application.yml but in this case you should override ReactiveJwtDecoder injection in JwtConfiguration.class
             userNameAttribute: user_name
   cloud:
     gateway:
       routes:
-      - id: monitor
+      - id: microservice1
         predicates:
         - Path=/monitor/**
-        uri: "http://delta-develop.istar.org.ua:8001"
+        uri: "http://microservice1:8001"
         filters:
         - PreOauth2SSOGatewayFilter
 
-      - id: updates-publisher
+      - id: microservice2
         predicates:
         - Path=/updates/**
-        uri: "http://localhost:8011"
+        uri: "http://microservice2:8011"
         filters:
         - PreOauth2SSOGatewayFilter
 
-      - id: updates-publisher-ws
+      - id: microservice2-ws-soсkjs
         predicates:
         - Path=/updates/events/info/**
         uri: "http://localhost:8011"
         filters:
         - PreOauth2SSOGatewayFilter
 
+      - id: microservice3-ws
+        predicates:
+        - Path=/updates/events/info/**
+        uri: "ws://microservice3:8021"
+        filters:
+        - PreOauth2SSOGatewayFilter

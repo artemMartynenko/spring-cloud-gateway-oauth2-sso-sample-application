@@ -1,4 +1,4 @@
-package org.c4isr.delta.cloudgateway;
+package org.c4isr.delta.cloudgateway.jwt;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
