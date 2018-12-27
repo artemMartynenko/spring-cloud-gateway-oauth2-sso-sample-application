@@ -2,6 +2,7 @@ package org.c4isr.delta.cloudgateway;
 
 import org.bouncycastle.util.io.pem.PemObject;
 import org.bouncycastle.util.io.pem.PemReader;
+import org.c4isr.delta.cloudgateway.jwt.JwtOAuth2AuthenticationTokenConverter;
 import org.c4isr.delta.cloudgateway.jwt.JwtPublicKey;
 import org.c4isr.delta.cloudgateway.jwt.JwtReactiveOAuth2UserService;
 import org.slf4j.Logger;
@@ -40,7 +41,7 @@ public class CloudGatewayApplication {
                   .oauth2Login()
                 .and()
                   .oauth2ResourceServer()
-                    .jwt();
+                    .jwt().jwtAuthenticationConverter(new JwtOAuth2AuthenticationTokenConverter());
         return http.build();
     }
 
